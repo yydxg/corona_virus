@@ -1,0 +1,58 @@
+import {fakeChartData} from './service'
+
+const Model = {
+  namespace: 'SHITI',
+
+  state: {
+    data: [],
+  },
+  effects: {
+    *init(_, { put }) {
+     /*  yield put({
+        type: 'fetchUserCurrent',
+      });
+      yield put({
+        type: 'fetchProjectNotice',
+      });
+      yield put({
+        type: 'fetchActivitiesList',
+      }); */
+      yield put({
+        type: 'fetchChart',
+        payload:'',
+      });
+    },
+    *submitRegularForm({ payload }, { call }) {
+      yield call(fakeSubmitForm, payload);
+      message.success('提交成功');
+    },
+    *fetchChart({ payload ,callback}, { call, put }) {
+      let response = yield call(fakeChartData, {
+        ...payload
+      });
+      yield put({
+        type: 'save',
+        payload: {
+          data:response.data
+        },
+      });
+      if (callback) callback(response);
+    },
+  },
+  reducers: {
+    save(state, { payload }) {
+      return { ...state, ...payload };
+    },
+
+    clear() {
+      return {
+        currentUser: undefined,
+        projectNotice: [],
+        activities: [],
+        data: [],
+      };
+    },
+  }
+};
+
+export default Model

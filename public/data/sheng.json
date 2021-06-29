@@ -1,0 +1,16 @@
+{
+  "data":[
+    {"FID":0,"province":"新疆","name":"乌鲁木齐","lon":88,"lat":44},
+    {"FID":1,"province":"西藏","name":"拉萨","lon":91,"lat":30},
+    {"FID":19,"province":"湖北","name":"武汉","lon":114,"lat":31,
+      "shi":[
+      {"FID":0,"name":"武汉","lon":114,"lat":31},
+      {"FID":0,"name":"襄阳","lon":113,"lat":32},
+      {"FID":0,"name":"黄冈","lon":114,"lat":31.5}
+    ]},
+    {"FID":22,"province":"河南","name":"郑州","lon":114,"lat":35,
+      "shi":[
+      {"FID":0,"name":"郑州","lon":88,"lat":44}
+    ]}
+  ]
+}

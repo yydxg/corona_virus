@@ -1,0 +1,51 @@
+.main{
+  margin-top: 90px;
+
+}
+
+.myWork {
+  list-style: none;
+  margin: 0;
+  padding-top: 0;
+  li {
+    float: left;
+    width: 600px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    &:nth-of-type(1) {
+      background: url(./img/section_1.png) no-repeat;
+      background-position: left 60%;
+      background-size: 580px auto;
+    }
+    .tit {
+      margin-bottom: 10px;
+      font-size: 24px;
+      color: #333333;
+    }
+    .txt {
+      margin-bottom: 20px;
+      width: 580px;
+      font-size: 14px;
+      color: #666666;
+      line-height: 26px;
+    }
+    .btn {
+      display: inline-block;
+      margin-right: 20px;
+      padding: 0 10px;
+      height: 32px;
+      line-height: 32px;
+      text-decoration: none;
+      border: 1px solid #4570FF;
+    }
+  }
+  &:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}

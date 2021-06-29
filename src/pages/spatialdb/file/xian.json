@@ -1,0 +1,905 @@
+[
+  {
+    "FID": 0,
+    "Name": "林州市",
+    "AdminCode": 410581,
+    "AdminName": "林州市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 1,
+    "Name": "安阳市",
+    "AdminCode": 410500,
+    "AdminName": "安阳市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 2,
+    "Name": "安阳县",
+    "AdminCode": 410522,
+    "AdminName": "安阳县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 3,
+    "Name": "汤阴县",
+    "AdminCode": 410523,
+    "AdminName": "汤阴县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 4,
+    "Name": "内黄县",
+    "AdminCode": 410527,
+    "AdminName": "内黄县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 5,
+    "Name": "滑县",
+    "AdminCode": 410526,
+    "AdminName": "滑县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 6,
+    "Name": "鹤壁市",
+    "AdminCode": 410600,
+    "AdminName": "鹤壁市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 7,
+    "Name": "浚县",
+    "AdminCode": 410621,
+    "AdminName": "浚县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 8,
+    "Name": "淇县",
+    "AdminCode": 410622,
+    "AdminName": "淇县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 9,
+    "Name": "济源市",
+    "AdminCode": 410881,
+    "AdminName": "济源市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 10,
+    "Name": "温县",
+    "AdminCode": 410825,
+    "AdminName": "温县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 11,
+    "Name": "孟州市",
+    "AdminCode": 410883,
+    "AdminName": "孟州市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 12,
+    "Name": "博爱县",
+    "AdminCode": 410822,
+    "AdminName": "博爱县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 13,
+    "Name": "焦作市",
+    "AdminCode": 410800,
+    "AdminName": "焦作市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 14,
+    "Name": "修武县",
+    "AdminCode": 410821,
+    "AdminName": "修武县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 15,
+    "Name": "武陟县",
+    "AdminCode": 410823,
+    "AdminName": "武陟县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 16,
+    "Name": "沁阳市",
+    "AdminCode": 410882,
+    "AdminName": "沁阳市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 17,
+    "Name": "开封县",
+    "AdminCode": 410224,
+    "AdminName": "开封县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 18,
+    "Name": "开封市",
+    "AdminCode": 410200,
+    "AdminName": "开封市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 19,
+    "Name": "杞县",
+    "AdminCode": 410221,
+    "AdminName": "杞县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 20,
+    "Name": "通许县",
+    "AdminCode": 410222,
+    "AdminName": "通许县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 21,
+    "Name": "尉氏县",
+    "AdminCode": 410223,
+    "AdminName": "尉氏县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 22,
+    "Name": "兰考县",
+    "AdminCode": 410225,
+    "AdminName": "兰考县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 23,
+    "Name": "栾川县",
+    "AdminCode": 410324,
+    "AdminName": "栾川县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 24,
+    "Name": "洛宁县",
+    "AdminCode": 410328,
+    "AdminName": "洛宁县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 25,
+    "Name": "嵩县",
+    "AdminCode": 410325,
+    "AdminName": "嵩县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 26,
+    "Name": "洛阳市",
+    "AdminCode": 410300,
+    "AdminName": "洛阳市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 27,
+    "Name": "孟津县",
+    "AdminCode": 410322,
+    "AdminName": "孟津县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 28,
+    "Name": "新安县",
+    "AdminCode": 410323,
+    "AdminName": "新安县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 29,
+    "Name": "汝阳县",
+    "AdminCode": 410326,
+    "AdminName": "汝阳县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 30,
+    "Name": "宜阳县",
+    "AdminCode": 410327,
+    "AdminName": "宜阳县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 31,
+    "Name": "伊川县",
+    "AdminCode": 410329,
+    "AdminName": "伊川县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 32,
+    "Name": "吉利区",
+    "AdminCode": 410300,
+    "AdminName": "吉利区",
+    "Kind": "0137"
+  },
+  {
+    "FID": 33,
+    "Name": "偃师市",
+    "AdminCode": 410381,
+    "AdminName": "偃师市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 34,
+    "Name": "舞阳县",
+    "AdminCode": 411121,
+    "AdminName": "舞阳县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 35,
+    "Name": "漯河市",
+    "AdminCode": 411100,
+    "AdminName": "漯河市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 36,
+    "Name": "临颍县",
+    "AdminCode": 411122,
+    "AdminName": "临颍县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 37,
+    "Name": "西峡县",
+    "AdminCode": 411323,
+    "AdminName": "西峡县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 38,
+    "Name": "淅川县",
+    "AdminCode": 411326,
+    "AdminName": "淅川县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 39,
+    "Name": "邓州市",
+    "AdminCode": 411381,
+    "AdminName": "邓州市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 40,
+    "Name": "南阳市",
+    "AdminCode": 411300,
+    "AdminName": "南阳市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 41,
+    "Name": "南召县",
+    "AdminCode": 411321,
+    "AdminName": "南召县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 42,
+    "Name": "镇平县",
+    "AdminCode": 411324,
+    "AdminName": "镇平县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 43,
+    "Name": "内乡县",
+    "AdminCode": 411325,
+    "AdminName": "内乡县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 44,
+    "Name": "方城县",
+    "AdminCode": 411322,
+    "AdminName": "方城县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 45,
+    "Name": "社旗县",
+    "AdminCode": 411327,
+    "AdminName": "社旗县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 46,
+    "Name": "唐河县",
+    "AdminCode": 411328,
+    "AdminName": "唐河县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 47,
+    "Name": "新野县",
+    "AdminCode": 411329,
+    "AdminName": "新野县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 48,
+    "Name": "桐柏县",
+    "AdminCode": 411330,
+    "AdminName": "桐柏县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 49,
+    "Name": "平顶山市",
+    "AdminCode": 410400,
+    "AdminName": "平顶山市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 50,
+    "Name": "石龙区",
+    "AdminCode": 410400,
+    "AdminName": "石龙区",
+    "Kind": "0137"
+  },
+  {
+    "FID": 51,
+    "Name": "宝丰县",
+    "AdminCode": 410421,
+    "AdminName": "宝丰县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 52,
+    "Name": "鲁山县",
+    "AdminCode": 410423,
+    "AdminName": "鲁山县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 53,
+    "Name": "郏县",
+    "AdminCode": 410425,
+    "AdminName": "郏县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 54,
+    "Name": "汝州市",
+    "AdminCode": 410482,
+    "AdminName": "汝州市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 55,
+    "Name": "叶县",
+    "AdminCode": 410422,
+    "AdminName": "叶县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 56,
+    "Name": "舞钢市",
+    "AdminCode": 410481,
+    "AdminName": "舞钢市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 57,
+    "Name": "台前县",
+    "AdminCode": 410927,
+    "AdminName": "台前县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 58,
+    "Name": "濮阳市",
+    "AdminCode": 410900,
+    "AdminName": "濮阳市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 59,
+    "Name": "清丰县",
+    "AdminCode": 410922,
+    "AdminName": "清丰县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 60,
+    "Name": "南乐县",
+    "AdminCode": 410923,
+    "AdminName": "南乐县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 61,
+    "Name": "范县",
+    "AdminCode": 410926,
+    "AdminName": "范县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 62,
+    "Name": "濮阳县",
+    "AdminCode": 410928,
+    "AdminName": "濮阳县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 63,
+    "Name": "陕县",
+    "AdminCode": 411222,
+    "AdminName": "陕县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 64,
+    "Name": "三门峡市",
+    "AdminCode": 411200,
+    "AdminName": "三门峡市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 65,
+    "Name": "渑池县",
+    "AdminCode": 411221,
+    "AdminName": "渑池县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 66,
+    "Name": "卢氏县",
+    "AdminCode": 411224,
+    "AdminName": "卢氏县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 67,
+    "Name": "义马市",
+    "AdminCode": 411281,
+    "AdminName": "义马市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 68,
+    "Name": "灵宝市",
+    "AdminCode": 411282,
+    "AdminName": "灵宝市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 69,
+    "Name": "虞城县",
+    "AdminCode": 411425,
+    "AdminName": "虞城县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 70,
+    "Name": "商丘市",
+    "AdminCode": 411400,
+    "AdminName": "商丘市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 71,
+    "Name": "民权县",
+    "AdminCode": 411421,
+    "AdminName": "民权县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 72,
+    "Name": "睢县",
+    "AdminCode": 411422,
+    "AdminName": "睢县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 73,
+    "Name": "宁陵县",
+    "AdminCode": 411423,
+    "AdminName": "宁陵县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 74,
+    "Name": "柘城县",
+    "AdminCode": 411424,
+    "AdminName": "柘城县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 75,
+    "Name": "夏邑县",
+    "AdminCode": 411426,
+    "AdminName": "夏邑县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 76,
+    "Name": "永城市",
+    "AdminCode": 411481,
+    "AdminName": "永城市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 77,
+    "Name": "原阳县",
+    "AdminCode": 410725,
+    "AdminName": "原阳县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 78,
+    "Name": "新乡市",
+    "AdminCode": 410700,
+    "AdminName": "新乡市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 79,
+    "Name": "新乡县",
+    "AdminCode": 410721,
+    "AdminName": "新乡县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 80,
+    "Name": "获嘉县",
+    "AdminCode": 410724,
+    "AdminName": "获嘉县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 81,
+    "Name": "辉县市",
+    "AdminCode": 410782,
+    "AdminName": "辉县市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 82,
+    "Name": "延津县",
+    "AdminCode": 410726,
+    "AdminName": "延津县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 83,
+    "Name": "封丘县",
+    "AdminCode": 410727,
+    "AdminName": "封丘县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 84,
+    "Name": "长垣县",
+    "AdminCode": 410728,
+    "AdminName": "长垣县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 85,
+    "Name": "卫辉市",
+    "AdminCode": 410781,
+    "AdminName": "卫辉市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 86,
+    "Name": "罗山县",
+    "AdminCode": 411521,
+    "AdminName": "罗山县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 87,
+    "Name": "信阳市",
+    "AdminCode": 411500,
+    "AdminName": "信阳市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 88,
+    "Name": "光山县",
+    "AdminCode": 411522,
+    "AdminName": "光山县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 89,
+    "Name": "新县",
+    "AdminCode": 411523,
+    "AdminName": "新县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 90,
+    "Name": "商城县",
+    "AdminCode": 411524,
+    "AdminName": "商城县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 91,
+    "Name": "固始县",
+    "AdminCode": 411525,
+    "AdminName": "固始县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 92,
+    "Name": "潢川县",
+    "AdminCode": 411526,
+    "AdminName": "潢川县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 93,
+    "Name": "淮滨县",
+    "AdminCode": 411527,
+    "AdminName": "淮滨县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 94,
+    "Name": "息县",
+    "AdminCode": 411528,
+    "AdminName": "息县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 95,
+    "Name": "禹州市",
+    "AdminCode": 411081,
+    "AdminName": "禹州市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 96,
+    "Name": "许昌市",
+    "AdminCode": 411000,
+    "AdminName": "许昌市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 97,
+    "Name": "许昌县",
+    "AdminCode": 411023,
+    "AdminName": "许昌县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 98,
+    "Name": "襄城县",
+    "AdminCode": 411025,
+    "AdminName": "襄城县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 99,
+    "Name": "长葛市",
+    "AdminCode": 411082,
+    "AdminName": "长葛市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 100,
+    "Name": "鄢陵县",
+    "AdminCode": 411024,
+    "AdminName": "鄢陵县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 101,
+    "Name": "郑州市",
+    "AdminCode": 410100,
+    "AdminName": "郑州市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 102,
+    "Name": "上街区",
+    "AdminCode": 410100,
+    "AdminName": "上街区",
+    "Kind": "0137"
+  },
+  {
+    "FID": 103,
+    "Name": "巩义市",
+    "AdminCode": 410181,
+    "AdminName": "巩义市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 104,
+    "Name": "荥阳市",
+    "AdminCode": 410182,
+    "AdminName": "荥阳市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 105,
+    "Name": "新密市",
+    "AdminCode": 410183,
+    "AdminName": "新密市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 106,
+    "Name": "新郑市",
+    "AdminCode": 410184,
+    "AdminName": "新郑市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 107,
+    "Name": "登封市",
+    "AdminCode": 410185,
+    "AdminName": "登封市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 108,
+    "Name": "中牟县",
+    "AdminCode": 410122,
+    "AdminName": "中牟县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 109,
+    "Name": "扶沟县",
+    "AdminCode": 411621,
+    "AdminName": "扶沟县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 110,
+    "Name": "周口市",
+    "AdminCode": 411600,
+    "AdminName": "周口市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 111,
+    "Name": "西华县",
+    "AdminCode": 411622,
+    "AdminName": "西华县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 112,
+    "Name": "商水县",
+    "AdminCode": 411623,
+    "AdminName": "商水县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 113,
+    "Name": "沈丘县",
+    "AdminCode": 411624,
+    "AdminName": "沈丘县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 114,
+    "Name": "郸城县",
+    "AdminCode": 411625,
+    "AdminName": "郸城县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 115,
+    "Name": "淮阳县",
+    "AdminCode": 411626,
+    "AdminName": "淮阳县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 116,
+    "Name": "太康县",
+    "AdminCode": 411627,
+    "AdminName": "太康县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 117,
+    "Name": "项城市",
+    "AdminCode": 411681,
+    "AdminName": "项城市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 118,
+    "Name": "鹿邑县",
+    "AdminCode": 411628,
+    "AdminName": "鹿邑县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 119,
+    "Name": "泌阳县",
+    "AdminCode": 411726,
+    "AdminName": "泌阳县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 120,
+    "Name": "西平县",
+    "AdminCode": 411721,
+    "AdminName": "西平县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 121,
+    "Name": "遂平县",
+    "AdminCode": 411728,
+    "AdminName": "遂平县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 122,
+    "Name": "驻马店市",
+    "AdminCode": 411700,
+    "AdminName": "驻马店市",
+    "Kind": "0137"
+  },
+  {
+    "FID": 123,
+    "Name": "上蔡县",
+    "AdminCode": 411722,
+    "AdminName": "上蔡县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 124,
+    "Name": "平舆县",
+    "AdminCode": 411723,
+    "AdminName": "平舆县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 125,
+    "Name": "汝南县",
+    "AdminCode": 411727,
+    "AdminName": "汝南县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 126,
+    "Name": "正阳县",
+    "AdminCode": 411724,
+    "AdminName": "正阳县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 127,
+    "Name": "确山县",
+    "AdminCode": 411725,
+    "AdminName": "确山县",
+    "Kind": "0137"
+  },
+  {
+    "FID": 128,
+    "Name": "新蔡县",
+    "AdminCode": 411729,
+    "AdminName": "新蔡县",
+    "Kind": "0137"
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "url":"https://jingwei.supfree.net/mengzi.asp?id=1803",
+  "data":[
+    {"FID":0,"shi":"襄阳","name":"襄阳","lon":114.15,"lat":23.02},
+    {"FID":1,"shi":"黄冈","name":"黄冈","lon":114.87,"lat":30.45},
+    {"FID":19,"shi":"武汉","name":"武汉","lon":114.30,"lat":30.60},
+    {"FID":22,"shi":"随州","name":"随州","lon":113.37,"lat":31.72}
+  ]
+}

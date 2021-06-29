@@ -1,0 +1,106 @@
+.layer{
+  width:160px;
+  position: absolute;
+  float: left;
+}
+.map{
+  width: calc(100% - 160px);
+  height: calc(100% - 80px);
+  float: right;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  position: relative;
+}
+
+.desc{
+  padding: 0 0 0 20px;
+  margin-top: 150px;
+  .title{
+    font-size: 20;
+  }
+  .item{
+
+    label{
+      font-weight: 800;
+    }
+  }
+}
+
+.chart{
+  width: 500px;
+  height: 400px;
+  position: absolute;
+  left: 160px;
+  bottom: 0px;
+  z-index: 11111;
+  background: white;
+}
+
+.legend{
+  position: absolute;
+  z-index: 1;
+  bottom: 36px;
+  right: 75px;
+}
+
+.searchFavors{
+  position: absolute;
+  top: 85px;
+  left: 30px;
+  z-index: 111;
+  width: 240px;
+  .bar{
+    width: 38px;
+    height: 26px;
+    background-color: #FFFFFF;
+    text-align: center;
+    margin-bottom: 5px;
+    cursor: pointer;
+    &:hover{
+      color: #4570FF;
+      background: #CCCCCC;
+    }
+  }
+}
+
+.toolbar{
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9999;
+  .bar{
+    width: 38px;
+    height: 26px;
+    background-color: #FFFFFF;
+    text-align: center;
+    margin-bottom: 5px;
+    cursor: pointer;
+    &:hover{
+      color: #4570FF;
+      background: #CCCCCC;
+    }
+  }
+}
+.buttons{
+  position: absolute;
+  top: 30%;
+  left: 30px;
+  z-index: 99;
+  width: 80px;
+  padding: 10px 5px;
+  background: #ccc;
+  .bar{
+    width: 26px;
+    height: 26px;
+    background-color: #FFFFFF;
+    text-align: center;
+    margin-bottom: 5px;
+    cursor: pointer;
+    &:hover{
+      color: #4570FF;
+      background: #CCCCCC;
+    }
+  }
+}

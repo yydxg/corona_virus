@@ -1,0 +1,142 @@
+.banner {
+  height: 820px;
+  padding: 440px 0 0 80px;
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 820px;
+    top: 0;
+    background: url(./img/bg_banner_visualization.jpg) no-repeat center center;
+    min-width: 1280px;
+  }
+
+  .tit {
+    position: absolute;
+    top: 422px;
+    font-size: 44px;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.50);
+  }
+  .intro {
+    position: absolute;
+    top: 524px;
+    width: 650px;
+    font-size: 18px;
+    color: #fff;
+    line-height: 34px;
+    text-shadow: 0 2px 2px rgba(0,0,0,0.50);
+  }
+  .download {
+    position: absolute;
+    top: 676px;
+    display: block;
+    width: 180px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    text-decoration: none;
+    background: #4570FF;
+    color: #fff;
+    font-size: 18px;
+    span {
+      position: relative;
+      top: 2px;
+      margin-left: 6px;
+      font-size: 22px;
+    }
+  }
+}
+
+.introBox {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  li {
+    padding: 30px 50px 0;
+    width: 412px;
+    height: 270px;
+    background: #F5F5F6;
+    text-align: center;
+    .icon1,
+    .icon2,
+    .icon3 {
+      display: inline-block;
+      width: 70px;
+      height: 70px;
+      background-image: url(./img/icon_1.png);
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .icon2 {
+      background-image: url(./img/icon_2.png);
+    }
+    .icon3 {
+      background-image: url(./img/icon_3.png);
+    }
+    .tit {
+      margin: 20px 0 15px;
+      font-size: 18px;
+      color: #000;
+    }
+    .txt {
+      font-size: 12px;
+      color: #666666;
+      line-height: 24px;
+      text-align: left;
+    }
+  }
+}
+
+.sceneBox {
+  list-style: none;
+  margin: 0 0 50px 0;
+  padding: 0;
+  li {
+    float: left;
+    width: 640px;
+    height: 480px;
+    background: rgba(69,112,255,0.04);
+    margin-bottom: 20px;
+    &:nth-of-type(1),
+    &:nth-of-type(4),
+    &:nth-of-type(5) {
+      background: url(./img/landform.png) no-repeat;
+      background-size: cover;
+    }
+    &:nth-of-type(4) {
+      background: url(./img/illumination.png) no-repeat;
+    }
+    &:nth-of-type(5) {
+      background: url(./img/nightscene.png) no-repeat;
+    }
+    &:nth-of-type(2),
+    &:nth-of-type(6) {
+      padding: 50px 0 0 40px;
+    }
+    &:nth-of-type(3) {
+      padding: 290px 0 0 100px;
+    }
+    .tit {
+      margin-bottom: 16px;
+      font-size: 24px;
+      color: #333333;
+    }
+    .txt {
+      width: 500px;
+      font-size: 14px;
+      color: #666666;
+      line-height: 26px;
+    }
+  }
+  &:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear:both;
+    visibility: hidden;
+  }
+}
