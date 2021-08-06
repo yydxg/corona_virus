@@ -35,13 +35,15 @@ class Shuili extends Component {
    * 类似于document.onload=这种
    */
   componentDidMount() {
+    let { dispatch, history } = this.props;
     this.initMap()
     const login = this.props.F_Login;
-    // if (login && login.username !== '') {
 
-    // } else {
-    //   this.props.history.push('/fish/user/login')
-    // }
+    if (login && login.username !== '') {
+
+    } else {
+      history.push('/shuili/user/login')
+    }
   }
 
   initMap = () => {
@@ -186,7 +188,7 @@ class Shuili extends Component {
           </div>
         </div>
 
-        <ul className={styles.school}>
+        {/* <ul className={styles.school}>
           <li>
             <div className={`${styles.circle} ${styles.primaryPeople}`} />
           </li>
@@ -199,7 +201,7 @@ class Shuili extends Component {
             <div className={`${styles.circle} ${styles.middlePeople}`} />
           </li>
           <li>Natural</li>
-        </ul>
+        </ul> */}
 
         <div style={{ position: 'fixed', bottom: 0 }}><Button icon='double-right' type="primary" onClick={this.showDrawer}>
           打开操作面板

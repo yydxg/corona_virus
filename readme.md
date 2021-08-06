@@ -1,2 +1,4 @@
-npm install
+---src
+  |---
+    ---npm install
 npm start

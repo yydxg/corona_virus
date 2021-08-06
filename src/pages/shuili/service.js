@@ -7,7 +7,7 @@ export async function fetchAll(params) {
 }
 
 export async function deleteById(params) {
-  return request(`/api/pigDisease/deleteById/${params.id}`, {
+  return request(`/api/v1/common/deleteById/${params.id}`, {
     method: 'GET'
   });
 }
@@ -26,8 +26,8 @@ export async function update(params){
   })
 }
 
-export async function fetchByNameAndCategory(params){
-  return request(`/api/yichan/findByNameAndCategory/${params.name}/${params.category}`,{
+export async function fetchByName(params){
+  return request(`/api/v1/common/findByV4_/shuili/${params.name}`,{
     method: 'GET',
   })
 }

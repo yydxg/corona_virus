@@ -9,8 +9,14 @@ import echarts from 'echarts'
 import { connect } from 'dva';
 import { getCookie, setCookie } from '@/utils/cookie'
 import moment from 'moment';
+import { Chart, Line, Point, Tooltip as ChartTooltip } from "bizcharts";
+
 
 var clipTileset, drawControl, timeTik;
+
+let times = ['2014/6/13','2014/7/17','2014/8/1','2014/8/5','2014/8/8','2014/8/12','2014/8/19','2014/8/26','2014/9/2',
+'2014/9/9','2014/9/16','2014/9/17','2014/9/23','2014/9/30','2014/10/7','2014/10/14','2014/10/15','2014/10/21','2014/10/28',
+'2014/11/4','2014/11/11','2014/11/18','2014/11/25','2014/12/2','2014/12/9','2014/12/30','2015/1/6','2015/1/13','2015/1/20','2015/1/27','2015/2/3','2015/2/10']
 
 @connect(({ Shuili, Login }) => ({
   Shuili, Login
@@ -19,10 +25,13 @@ class Shuili_search extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      showchart:false,
+      chartData:[],
       visible: false,
       datas: [],
       operateType: 'add',
-      urlTileset: 'http://127.0.0.1:9999/shenda_data/max-3dtiles-3/6-8-bu/tileset.json', //模型地址
+      // urlTileset: 'http://127.0.0.1:9999/shenda_data/max-3dtiles-3/6-8-bu/tileset.json', //模型地址
+      urlTileset: 'http://127.0.0.1:9999/data_temp/daba/tileset.json', //模型地址
     }
   }
 
@@ -53,17 +62,20 @@ class Shuili_search extends Component {
       console.log('创建完成', e);
       var ellipsoid = viewer.scene.globe.ellipsoid;
       var position = e.entity.position._value
-      var wgs84 = ellipsoid.cartesianToCartographic(position);
-      console.log(wgs84)
+      var cartograhphic = ellipsoid.cartesianToCartographic(position);
+      var lat = Cesium.Math.toDegrees(cartograhphic.latitude);
+      var lng = Cesium.Math.toDegrees(cartograhphic.longitude);
+      var alt = cartograhphic.height;
       this.setState({
-        longitude: wgs84.longitude,
-        latitude: wgs84.latitude,
+        longitude: lng,
+        latitude: lat,
       })
       // this.formRef.props.form.resetFields();
 
       this.setState({ visible: true, operateType: 'add' }, () => {
         setTimeout(() => {
           this.formRef.props.form.setFieldsValue({
+            name: '',
             day1: 0.00, day2: 1.01, day3: 1.86, day4: 2.24, day5: 2.39, day6: 2.27, day7: 1.61, day8: 1.55, day9: 1.53, day10: 2.21,
             day11: 2.50, day12: 2.67, day13: 2.53, day14: 2.40, day15: 2.31, day16: 2.13, day17: 2.13, day18: 2.01, day19: 2.03, day20: 2.21,
             day21: 2.29, day22: 2.35, day23: 2.24, day24: 2.41, day25: 2.42, day26: 2.32, day27: 2.33, day28: 2.27, day29: 2.24, day30: 2.11,
@@ -73,12 +85,7 @@ class Shuili_search extends Component {
       });
     });
 
-    drawControl.loadJson({ "type": "FeatureCollection", "features": [
-      { "type": "Feature", "properties": { "type": "billboard", "style": { "image": require("../img/mark1.png"), "label": { "text": "", "font_size": 30, "color": "#ffffff", "border": true, "border_color": "#000000", "pixelOffset": [0, -50] } }, "attr": {} }, "geometry": { "type": "Point", "coordinates": [116.274056, 30.949407, 0] } }, 
-      { "type": "Feature", "properties": { "type": "billboard", "style": { "image": require("../img/mark1.png"), "label": { "text": "", "font_size": 30, "color": "#ffffff", "border": true, "border_color": "#000000", "pixelOffset": [0, -50] } }, "attr": {} }, "geometry": { "type": "Point", "coordinates": [116.339646, 30.9412, -0.01] } }] }, {
-      clear: true,
-      flyTo: true
-    })
+
   }
 
   startEditing = (entity) => {
@@ -115,15 +122,29 @@ class Shuili_search extends Component {
 
   locate = (record) => {
     const { dispatch } = this.props
-    const { longitude, latitude } = record
+    const { v1: longitude, v2: latitude } = record
+    console.log(longitude, latitude);
     viewer.camera.flyTo({
-      destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, 100000),
+      destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, 1000),
       orientation: {
         heading: Cesium.Math.toRadians(0.0),
         pitch: Cesium.Math.toRadians(-90),
         roll: 0.0
       }
     });
+  }
+
+  delete = (record) => {
+    console.log(record)
+    this.props.dispatch({
+      type: 'Shuili/deleteImage',
+      payload: {
+        id: record.id
+      }
+    }).then(r => {
+      console.log(r);
+      message.info('删除成功！')
+    })
   }
 
   showModal = () => {
@@ -143,12 +164,23 @@ class Shuili_search extends Component {
     });
 
   };
-  showUpdateModal = (vid) => {
+  showUpdateModal = (record) => {
     const { datas } = this.state;
-    let da = datas.find(d => d.id == vid)
-    const { id, name_en, date, longitude, latitude, area, criteria_txt, category, category_short,
-      states_name_en, region_en, iso_code, udnp_code, transboundary, } = da
+    let arrs = record.v3.split(',')
+    
+    let data = arrs.map((item,index)=>{
+      return {
+        time: times[index],
+        value: parseFloat(item),
+      }
+    })
+    console.log(data);
+    this.setState({
+      showchart:true,
+      chartData:data,
+    },()=>{
 
+    })
   }
 
   handleCancel = () => {
@@ -184,10 +216,12 @@ class Shuili_search extends Component {
         })
       } { //新增模式
         // Object.values(obj)
+        let name = values.name
+        delete values['name'];
         dispatch({
           type: 'Shuili/save',
           payload: {
-            data: { module: 'shuili', v1: longitude, v2: latitude, v3: Object.values({ ...values }).join(',') }
+            data: { module: 'shuili', v1: longitude, v2: latitude, v3: Object.values({ ...values }).join(','), v4: name }
           }
         }).then(r => {
           console.log(r);
@@ -245,9 +279,10 @@ class Shuili_search extends Component {
     //   // reject()
     // });
 
+    console.log(urlTileset);
     var layerModel = mars3d.layer.createLayer({
       "type": "3dtiles",
-      "name": "",
+      "name": "11",
       "url": urlTileset, //'http://data.marsgis.cn/3dtiles/bim-qiaoliang/tileset.json',//定义在 config\marsUrl.js
       "maximumScreenSpaceError": 16,
       "maximumMemoryUsage": 8192,
@@ -312,9 +347,9 @@ class Shuili_search extends Component {
       if (!err) {
         console.log('Received values of form: ', values);
         this.props.dispatch({
-          type: 'Shuili/findByNameAndCategory',
+          type: 'Shuili/findByName',
           payload: {
-            ...values,
+            name: values.name || 'all',
           }
         }).then(res => {
           const { success, data } = res;
@@ -322,7 +357,17 @@ class Shuili_search extends Component {
             this.setState({
               datas: data,
             })
-
+            let features = data.map(d => {
+              let lon = parseFloat(d.v1)
+              let lat = parseFloat(d.v2)
+              return { "type": "Feature", "properties": { "type": "billboard", "style": { "image": require("../img/mark1.png"), "label": { "text": "", "font_size": 30, "color": "#ffffff", "border": true, "border_color": "#000000", "pixelOffset": [0, -50] } }, "attr": {} }, "geometry": { "type": "Point", "coordinates": [lon, lat, 0] } }
+            })
+            drawControl.clearDraw();
+            drawControl.loadJson({
+              "type": "FeatureCollection", "features": features,
+              clear: true,
+              flyTo: true
+            })
           }
         })
 
@@ -343,13 +388,14 @@ class Shuili_search extends Component {
   }
 
   render() {
-    const { datas, operateType } = this.state
+    const { datas, operateType ,showchart,chartData} = this.state
     const { getFieldDecorator } = this.props.form;
+    // http://127.0.0.1:9999/shenda_data/max-3dtiles-3/6-8-bu/tileset.json
     return (
       <div>
         <Row style={{ marginBottom: 10 }}>
           <Col span={14} >
-            <Input type="primary" shape="round" defaultValue='http://127.0.0.1:9999/shenda_data/max-3dtiles-3/6-8-bu/tileset.json' onChange={this.handeUrlChange} />
+            <Input type="primary" shape="round" defaultValue='http://127.0.0.1:9999/data_temp/daba/tileset.json' onChange={this.handeUrlChange} />
           </Col>
           <Col offset={1} span={2}>
             <Button type="primary" shape="round" onClick={this.add3dModel}><Icon type="plus" />添加</Button>
@@ -357,7 +403,7 @@ class Shuili_search extends Component {
           <Col offset={2} span={2}>
             <Button type="primary" shape="round" onClick={this.polyClip}>裁剪</Button>
           </Col>
-          <Col offset={1} span={2}>
+          <Col offset={1} span={1}>
             <Button type="primary" shape="round" onClick={this.clearClip}>清除</Button>
           </Col>
         </Row>
@@ -377,13 +423,13 @@ class Shuili_search extends Component {
                 {getFieldDecorator(`name`, {
                   rules: [
                     {
-                      required: true,
+                      required: false,
                       message: '请输入名称!',
                     },
                   ],
                 })(<Input />)}
               </Form.Item>
-              <Form.Item label="类型：" >
+              {/* <Form.Item label="类型：" >
                 {getFieldDecorator('category', {
                   rules: [{ required: true, message: '请选择类型！!' }],
                 })(
@@ -396,7 +442,7 @@ class Shuili_search extends Component {
                     <Select.Option value="Mixed">Mixed</Select.Option>
                   </Select>
                 )}
-              </Form.Item>
+              </Form.Item> */}
               <Form.Item >
                 <Button type="primary" htmlType="submit">搜索</Button>
               </Form.Item>
@@ -410,63 +456,40 @@ class Shuili_search extends Component {
             scroll={{ x: 1000, y: 300 }}
             columns={[
               {
-                title: 'name_en',
-                dataIndex: 'name_en',
-                fixed: 'left',
-                key: 'name_en',
-                width: 200
+                title: 'name',
+                dataIndex: 'v4',
+                // fixed: 'left',
+                key: 'v4',
+                width: 100
               },
               {
-                title: 'region_en',
-                dataIndex: 'region_en',
-                fixed: 'left',
-                key: 'region_en',
-                width: 120
+                title: '经度',
+                dataIndex: 'v1',
+                // fixed: 'left',
+                key: 'v1',
+                width: 80
               },
               {
-                title: 'category',
-                dataIndex: 'category',
-                key: 'category',
-                width: 100,
-                render: function (text, record) {
-                  if (text.indexOf("Mixed") > -1) {
-                    return <Tag color={'geekblue'} key={'geekblue'}> {text} </Tag>
-                  } else if (text.indexOf("Cultural") > -1) {
-                    return <Tag color={'green'} key={'green'}> {text} </Tag>
-                  } else if (text.indexOf("Natural") > -1) {
-                    return <Tag color={'yellow'} key={'yellow'}> {text} </Tag>
-                  }
-                }
-              },
-              {
-                title: 'date',
-                dataIndex: 'date',
-                key: 'date',
+                title: '纬度',
+                dataIndex: 'v2',
+                key: 'v2',
                 width: 80,
               },
               {
-                title: 'area',
-                dataIndex: 'area',
-                key: 'area',
+                title: '检测数据',
+                dataIndex: 'v3',
+                key: 'v3',
                 width: 100,
-              },
-              {
-                title: 'longitude',
-                dataIndex: 'longitude',
-                key: 'longitude',
-                width: 120,
-              },
-              {
-                title: 'latitude',
-                dataIndex: 'latitude',
-                key: 'latitude',
-                width: 100,
-              },
-              {
-                title: 'udnp_code',
-                dataIndex: 'udnp_code',
-                key: 'udnp_code',
-                width: 120,
+                render: function (text, record) {
+                  return text;
+                  // if (text.indexOf("Mixed") > -1) {
+                  //   return <Tag color={'geekblue'} key={'geekblue'}> {text} </Tag>
+                  // } else if (text.indexOf("Cultural") > -1) {
+                  //   return <Tag color={'green'} key={'green'}> {text} </Tag>
+                  // } else if (text.indexOf("Natural") > -1) {
+                  //   return <Tag color={'yellow'} key={'yellow'}> {text} </Tag>
+                  // }
+                }
               },
               {
                 title: '操作',
@@ -475,13 +498,30 @@ class Shuili_search extends Component {
                 width: 80,
                 render: (text, record) => (
                   <span>
-                    {/* <a style={{ marginRight: 16 }} onClick={() => this.showUpdateModal(record.id)}>详情</a> */}
+                    <a style={{ marginRight: 16 }} onClick={() => this.showUpdateModal(record)}>图表</a>
                     <a style={{ marginRight: 16 }} onClick={() => this.locate(record)}>定位</a>
+                    <a style={{ marginRight: 16 }} onClick={() => this.delete(record)}>删除</a>
                   </span>
                 ),
               },
             ]} dataSource={datas} pagination={true} />
         </Card>
+
+        { showchart && <Card>
+          <Chart
+            appendPadding={[10, 0, 0, 10]}
+            autoFit
+            height={500}
+            data={chartData}
+            scale={{ value: { min: 0, alias: '位移mm', type: 'linear-strict' }, time: { range: [0, 1] } }}
+          >
+
+            <Line position="time*value" />
+            <Point position="time*value" />
+            <ChartTooltip showCrosshairs />
+          </Chart>
+        </Card>
+        }
 
         <CollectionCreateForm
           wrappedComponentRef={this.saveFormRef}
@@ -518,6 +558,11 @@ const CollectionCreateForm = Form.create({ name: 'form_in_addMovie' })(
           onOk={onCreate}
         >
           <Form layout="horizontal">
+            <Form.Item label="name" {...formItemLayout}>
+              {getFieldDecorator('name', {
+                rules: [{ required: true, message: 'please enter  !' }],
+              })(<Input />)}
+            </Form.Item>
             <Form.Item label="2014/6/13" {...formItemLayout}>
               {getFieldDecorator('day1', {
                 rules: [{ required: true, message: 'please enter  !' }],

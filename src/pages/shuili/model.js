@@ -1,4 +1,4 @@
-import { fetchAll,deleteById,update,save,fetchByNameAndCategory} from './service';
+import { fetchAll,deleteById,update,save,fetchByName} from './service';
 
 export default {
   namespace: 'Shuili',
@@ -30,8 +30,8 @@ export default {
       let response = yield call(deleteById,payload);
       return response
     },
-    *findByNameAndCategory({ payload,callback  }, { call, put, select ,take}) {
-      let {success,data} = yield call(fetchByNameAndCategory,payload);
+    *findByName({ payload,callback  }, { call, put, select ,take}) {
+      let {success,data} = yield call(fetchByName,payload);
       if(success){
         yield put({
           type:'init_images',

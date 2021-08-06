@@ -250,7 +250,8 @@ class TopMenu extends Component {
             {/* <p>基于MapProxy的地图瓦片切图工具</p> */}
             {/* <p>xxx</p> */}
             {/* <p>Cesium</p> */}
-            <p>中国遗产地信息展示平台</p>
+            {/* <p>中国遗产地信息展示平台</p> */}
+            <p>基于cesium的水利工程轻量化协同平台</p>
           </div>
           <ul className={styles.menu}>
             {

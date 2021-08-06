@@ -15,7 +15,8 @@ class Index extends Component {
       // <Redirect to="/neo_django_country" />
       // <Redirect to="/fish/user/login" />
       // <Redirect to="/PigDisease" />
-      <Redirect to="/yichan" />
+      // <Redirect to="/yichan" />
+      <Redirect to="/shuili" />
     )
   }
 }
