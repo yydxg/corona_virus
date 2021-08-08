@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Redirect } from 'umi';
-import {getCookie,setCookie} from '@/utils/cookie'
+import { getCookie, setCookie } from '@/utils/cookie'
 
 class Index extends Component {
-  
-  componentDidMount(){
-    
+
+  componentDidMount() {
+
   }
 
   render() {
@@ -16,7 +16,8 @@ class Index extends Component {
       // <Redirect to="/fish/user/login" />
       // <Redirect to="/PigDisease" />
       // <Redirect to="/yichan" />
-      <Redirect to="/shuili" />
+      // <Redirect to="/shuili" />
+      <Redirect to="/cesium_huanghe" />
     )
   }
 }

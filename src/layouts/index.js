@@ -22,7 +22,7 @@ class BasicLayout extends Component {
     return (
       <div className={`${styles.container} app`}>
         { location.pathname.indexOf('/login') === -1 && location.pathname.indexOf('/register') === -1 && <div>
-            <Menu5 />
+            <Menu />
             <div className={styles.normal}>
               { this.props.children }
             </div>

@@ -18,8 +18,8 @@ class TopMenu1 extends Component{
   };
 
   componentDidMount() {
-    if(!this.props.F_Login)
-      this.props.history.push('/jiangshui/user/login')
+    // if(!this.props.F_Login)
+    //   this.props.history.push('/jiangshui/user/login')
     this.props.history.listen(route => {
       this.setState({
         firstMenu: route.pathname.split('\/')[1],

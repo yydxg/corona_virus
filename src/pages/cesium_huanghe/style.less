@@ -1,0 +1,120 @@
+.cesiumContainer{
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  position: relative;
+}
+
+.toolbar{
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9999;
+  .bar{
+    width: 26px;
+    height: 26px;
+    background-color: #FFFFFF;
+    text-align: center;
+    margin-bottom: 5px;
+    cursor: pointer;
+    &:hover{
+      color: #4570FF;
+      background: #CCCCCC;
+    }
+  }
+}
+.buttons{
+  position: absolute;
+  top: 30%;
+  left: 30px;
+  z-index: 99;
+  width: 80px;
+  padding: 10px 5px;
+  background: #ccc;
+  .bar{
+    width: 26px;
+    height: 26px;
+    background-color: #FFFFFF;
+    text-align: center;
+    margin-bottom: 5px;
+    cursor: pointer;
+    &:hover{
+      color: #4570FF;
+      background: #CCCCCC;
+    }
+  }
+}
+
+.baseMap{
+  position: fixed;
+  top: 80px;
+  left: 0px;
+  width: 300px;
+  height: 500px;
+
+  .row{
+    height: 30px;
+    margin-bottom: 10px;
+  }
+}
+:global{
+  .ant-carousel .slick-slide {
+    text-align: center;
+    height: 400px;
+    line-height: 400px;
+    background: #364d79;
+    overflow: hidden;
+  }
+  
+  .ant-carousel .slick-slide h3 {
+    color: #fff;
+  }  
+}
+
+
+// 定义颜色数组
+@images:  url('./img/photo/20210225_100354.jpg'),
+ url('./img/photo/20210225_101354.jpg'),url('./img/photo/20210225_102355.jpg'),
+ url('./img/photo/20210225_103354.jpg'),url('./img/photo/20210225_104355.jpg'),
+ url('./img/photo/20210225_105354.jpg'),url('./img/photo/20210225_110354.jpg'),
+ url('./img/photo/20210225_111354.jpg'),url('./img/photo/20210225_112354.jpg'),url('./img/photo/20210225_113354.jpg'),
+ url('./img/photo/20210225_114355.jpg'),url('./img/photo/20210225_115354.jpg'),
+ url('./img/photo/20210225_120354.jpg'),
+ url('./img/photo/20210225_121354.jpg'),url('./img/photo/20210225_122354.jpg');
+
+@len: length(@images);
+
+.mycarousel{
+  position: fixed;
+  top: 80px;
+  right: 0px;
+  width: 800px;
+  
+  .Loop(@index) when(@index<@len){
+    .item@{index}{
+      background: extract(@images,@index);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .Loop(@index+1);
+  
+    .item0{
+      background: url('./img/photo/20210225_095354.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  }
+  
+  .Loop(0);
+}
+
+.myChart{
+  position: fixed;
+  top: 80px;
+  right: 0px;
+  width: 800px;
+}

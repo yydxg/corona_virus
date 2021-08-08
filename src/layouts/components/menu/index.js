@@ -251,7 +251,8 @@ class TopMenu extends Component {
             {/* <p>xxx</p> */}
             {/* <p>Cesium</p> */}
             {/* <p>中国遗产地信息展示平台</p> */}
-            <p>基于cesium的水利工程轻量化协同平台</p>
+            {/* <p>基于cesium的水利工程轻量化协同平台</p> */}
+            <p>xxx</p>
           </div>
           <ul className={styles.menu}>
             {
