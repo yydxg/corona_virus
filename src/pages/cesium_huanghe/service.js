@@ -1,19 +1,7 @@
 import { request } from '@/utils/request';
 
-export async function fetchPerson(params) {
-  return request(`/api/person/findByCurrentCity/${params.currentCity}`, {
+export async function fetchXb(params) {
+  return request(`/api/huanghe/findList/${params.lng}/${params.lat}`, {
     method: 'GET'
   });
-}
-
-export async function fetchSuyuan(params) {
-  return request(`/api/person/findSuyuan/${params.id}`, {
-    method: 'GET'
-  });
-}
-
-export async function fetchTravel(params){
-  return request(`/api/travel/findTravelOrderByDate/${params.id}`,{
-    method: 'GET'
-  })
 }

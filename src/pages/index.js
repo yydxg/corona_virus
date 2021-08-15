@@ -10,14 +10,14 @@ class Index extends Component {
 
   render() {
     return (
-      // <Redirect to="/user/login" />
+      <Redirect to="/user/login" />
       // <Redirect to="/openlayers_nongye" />
       // <Redirect to="/neo_django_country" />
       // <Redirect to="/fish/user/login" />
       // <Redirect to="/PigDisease" />
       // <Redirect to="/yichan" />
       // <Redirect to="/shuili" />
-      <Redirect to="/cesium_huanghe" />
+      // <Redirect to="/cesium_huanghe" />
     )
   }
 }

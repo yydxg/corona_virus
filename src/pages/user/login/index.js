@@ -23,17 +23,18 @@ class NormalLoginForm extends React.Component {
         }).then((res)=>{
           const { success,result ,data ,err} = res;
           if(success && data){
-            let data2 = JSON.parse(data)
-            console.log(data2)
-            if(data2.length === 0){
+            // let data2 = JSON.parse(data)
+            console.log(data)
+            if(data.length === 0){
               Modal.info({
                 content:"未找到用户！"
               })
               return
             }else{
-              setCookie("username",data2[0].fields.username)
-              setCookie("password",data2[0].fields.password)
-              this.props.history.push('/openlayers_geodjango')
+              // setCookie("username",data2[0].fields.username)
+              // setCookie("password",data2[0].fields.password)
+              this.props.history.push('/cesium_huanghe')
+              // <Redirect to="/cesium_huanghe" />
             }
           }else{
             Modal.info({
@@ -59,7 +60,7 @@ class NormalLoginForm extends React.Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <div style={{width:'500px',margin: '0 auto',padding:'200px 0 0 0',height:'50px'}}>
-        <h1 style={{textAlign:"center"}}>研究生知识管理平台</h1>
+        <h1 style={{textAlign:"center"}}>xxx</h1>
       <Form onSubmit={this.handleSubmit} className="login-form">
         <Form.Item>
           {getFieldDecorator('username', {
@@ -93,11 +94,11 @@ class NormalLoginForm extends React.Component {
           <Button type="primary" htmlType="submit" className="login-form-button">
             登录
           </Button>
-           &nbsp; &nbsp; Or &nbsp; &nbsp; <Link to={{
+          {/*  &nbsp; &nbsp; Or &nbsp; &nbsp; <Link to={{
               pathname: `register`,
               state: 'hello',
               }}>注册 now!
-              </Link>
+              </Link> */}
         </Form.Item>
       </Form>
       </div>

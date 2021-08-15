@@ -1,7 +1,7 @@
 /* global mars3d Cesium*/
 import React, { Component } from 'react';
 import {
-  Divider, Checkbox, Button, Row, Col, Tooltip, Modal, Select, Card, Radio, Steps, message, Carousel,
+  Divider, Checkbox, Button, Row, Col, Tooltip, Modal, Select, Card, Radio, Steps, message, Carousel,Icon,
 } from 'antd'
 import styles from './style.less'
 import echarts from 'echarts'
@@ -19,11 +19,12 @@ import {
   Slider
 } from "bizcharts";
 import { LF_data, GP_data } from './data.js';
+import { connect } from 'dva';
+import model from './model';
 
 const { Step } = Steps;
 const { Option, OptGroup } = Select;
 
-console.log(LF_data)
 let parseLF_1 = LF_data.map(r => ({ ...r, type: 'lf1', val: r['lf1'] }));
 let parseLF_2 = LF_data.map(r => ({ ...r, type: 'lf2', val: r['lf2'] }));
 let parseLF = parseLF_1.concat(parseLF_2);
@@ -65,7 +66,13 @@ const cols = {
   },
 };
 
-class Cesium_navigation extends Component {
+const imagesData = ['RSLC_1_6_pt.eqa.def1','RSLC_1_7_pt.eqa.def1','RSLC_2_7_pt.eqa.def1'];
+
+@connect(({ Cesium_Huanghe, Login }) => ({
+  Cesium_Huanghe, Login
+}))
+
+class Cesium_huanghe extends Component {
 
   constructor(props) {
     super(props)
@@ -90,30 +97,43 @@ class Cesium_navigation extends Component {
 
 
       monitorPointDataSource: new Cesium.CustomDataSource("monitor"), //监控点
-      imageryLayer: null, // 影像
+      imageryLayers: [] , // 影像
       showCarousel: false, // 图片轮播
       showLF: false,
-      showGP: true,
+      showGP: false,
+      isCt:false,
+      showXb:false,
+      xbData:null,
     }
   }
 
   componentDidMount() {
-    this.start()
-
+    let { dispatch,history } = this.props;
+    const login = this.props.Login;
+    if(login && login.username !==''){
+      this.start()
+    }else{
+      history.push('/')
+    }
   }
 
   start = () => {
     this.initMap({
     })
       .then(() => {
-        return this.addImageLayerWMTS();
+        imagesData.map(item=>{
+          this.addImageLayerWMTS(item);
+        })
+        return Promise.resolve()
       })
-      // .then(() => {
-      //   return this.add3Dtiles()
-      // })
       .then(() => {
         this.bindClick()
         this.addFeature()
+        let timer = setInterval(()=>{
+          this.setState({
+            showXb:false,
+          })
+        },30000)
       })
   }
 
@@ -123,7 +143,10 @@ class Cesium_navigation extends Component {
       mars3d.createMap({
         id: 'cesiumContainer',
         data: {
-          homeButton: true,
+          homeButton: false,
+          fullscreenButton: false,
+          fulllscreenButtond: false,
+          navigationHelpButton: false,
           center: { "x": 116.8782, "y": 34.9011, "z": 10000, "heading": 0, "pitch": -90, "roll": 0 },
           location: {
             format: "<div>经度:{x}</div> <div>纬度:{y}</div> <div>海拔：{z}米</div> <div>方向：{heading}度</div> <div>视高：{height}米</div>"
@@ -146,7 +169,8 @@ class Cesium_navigation extends Component {
               ],
               "visible": true
             }
-          ]
+          ],
+          infoBox: false,
         },
         success: (viewer) => {
           // viewer.camera.setView()
@@ -166,25 +190,87 @@ class Cesium_navigation extends Component {
   };
 
   bindClick = () => {
+    const { dispatch} = this.props
     var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
     handler.setInputAction(movement => {
-      const { startNav } = this.state
+      const { showXb } = this.state
       let pick = viewer.scene.camera.pickEllipsoid(movement.position, viewer.scene.globe.ellipsoid);
-      if (startNav && Cesium.defined(pick)) {
-        this.addNavPoint(pick)
-        console.log(pick)
+      if (showXb && Cesium.defined(pick)) {
+        // this.addNavPoint(pick)
+        var ellipsoid=viewer.scene.globe.ellipsoid;
+        var cartographic=ellipsoid.cartesianToCartographic(pick);
+        var lat=Cesium.Math.toDegrees(cartographic.latitude);
+        var lng=Cesium.Math.toDegrees(cartographic.longitude);
+        console.log(lng,lat)
+        dispatch({
+          type: 'Cesium_Huanghe/getXb',
+          payload: {
+            lng:lng.toFixed(3),
+            lat:lat.toFixed(3),
+          }
+        }).then(r => {
+          console.log(r)
+          if(r.success){
+            const {data} =r;
+            if(data.length === 0 ) {
+              this.setState({
+                showXb:false,
+                xbData:null,
+              })
+              message.warning('当前坐标点无形变数据.')
+              return;
+            }
+            let result = data[Math.floor(Math.random()*data.length)];
+            console.log(result);
+            const xbData = [
+              { day: "20191025", xb: parseFloat((result['f11']).trim())},
+              { day: "20191106", xb: parseFloat((result['f12']).trim()) },
+              { day: "20191118", xb: parseFloat((result['f13']).trim()) },
+              { day: "20191130", xb: parseFloat((result['f14']).trim()) },
+              { day: "20191212", xb: parseFloat((result['f15']).trim()) },
+              { day: "20191224", xb: parseFloat((result['f16']).trim()) },
+              { day: "20200105", xb: parseFloat((result['f17']).trim()) },
+              { day: "20200117", xb: parseFloat((result['f18']).trim()) },
+              { day: "20200129", xb: parseFloat((result['f19']).trim()) },
+              { day: "20200210", xb: parseFloat((result['f20']).trim()) },
+              { day: "20200222", xb: parseFloat((result['f21']).trim()) },
+              { day: "20200305", xb: parseFloat((result['f22']).trim()) },
+              { day: "20200317", xb: parseFloat((result['f23']).trim()) },
+              { day: "20200329", xb: parseFloat((result['f24']).trim()) },
+              { day: "20200422", xb: parseFloat((result['f25']).trim()) },
+              { day: "20200504", xb: parseFloat((result['f26']).trim()) },
+              { day: "20200516", xb: parseFloat((result['f27']).trim()) },
+              { day: "20200528", xb: parseFloat((result['f28']).trim()) },
+              { day: "20200609", xb: parseFloat((result['f29']).trim()) },
+              { day: "20200621", xb: parseFloat((result['f30']).trim()) },
+              { day: "20200703", xb: parseFloat((result['f31']).trim()) },
+              { day: "20200715", xb: parseFloat((result['f32']).trim()) },
+              { day: "20200727", xb: parseFloat((result['f33']).trim()) },
+              { day: "20200808", xb: parseFloat((result['f34']).trim()) },
+              { day: "20200820", xb: parseFloat((result['f35']).trim()) },
+              { day: "20200901", xb: parseFloat((result['f36']).trim()) },
+              { day: "20200913", xb: parseFloat((result['f37']).trim()) },
+              { day: "20200925", xb: parseFloat((result['f38']).trim()) },
+              { day: "20201007", xb: parseFloat((result['f39']).trim()) }
+            ];
+            this.setState({
+              showXb:true,
+              xbData:xbData,
+            })
+          }else{
+            message.error('server error.')
+          }
+        })
       }
-
-      this.setState({
-      })
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
   }
 
-  addImageLayerWMTS() {
+  addImageLayerWMTS(name) {
+    const { imageryLayers } = this.state;
     return new Promise((reslove, reject) => {
       var wmtsImageryProvider = new Cesium.WebMapTileServiceImageryProvider({
         url: '/geoserver/gwc/service/wmts',
-        layer: 'huanghe:geotiff_coverage',
+        layer: 'huanghe:'+name,
         style: '',
         format: 'image/png',
         tileMatrixSetID: 'EPSG:4326',
@@ -195,11 +281,14 @@ class Cesium_navigation extends Component {
         })
       });
       let layer = viewer.imageryLayers.addImageryProvider(wmtsImageryProvider);
+      layer.show = false;
       this.setState({
-        imageryLayer: layer
+        imageryLayers: [...imageryLayers,{
+          name:name,
+          data:layer
+        }]
       }, () => {
         reslove()
-
       })
     })
   }
@@ -321,13 +410,13 @@ class Cesium_navigation extends Component {
   }
 
   onChangeBaseMap = value => {
-    const { imageryLayer, monitorPointDataSource } = this.state
+    const { imageryLayers, monitorPointDataSource } = this.state
     console.log('radio checked', value);
     if (value.indexOf(1) != -1) {// 影像
-      imageryLayer.show = true;
+      imageryLayers.show = true;
       // this.addYX('http://127.0.0.1:8084/arcgis/satellite/{z}/{x}/{y}.jpg')
     } else {
-      imageryLayer.show = false;
+      imageryLayers.show = false;
     }
 
     if (value.indexOf(2) != -1) { // 监控点
@@ -343,6 +432,25 @@ class Cesium_navigation extends Component {
       baseMap: value,
     });
   };
+
+  onChangeImage = (value) =>{
+    const { imageryLayers, monitorPointDataSource } = this.state
+    console.log('radio checked',imageryLayers, value);
+    imagesData.map(v=>{
+      let layer = imageryLayers.find(i=>i.name === v)
+      if(layer){
+        layer.data.show = false;
+      }
+    })
+    value.map(v=>{
+      let layer = imageryLayers.find(i=>i.name === v)
+      if(layer){
+        layer.data.show = true;
+      }
+    })
+    
+
+  }
 
   addYX = (url) => {
     const { baseMapLayer } = this.state
@@ -432,8 +540,9 @@ class Cesium_navigation extends Component {
         name: item.text,
         position: Cesium.Cartesian3.fromDegrees(+item.lng, +item.lat, item.z || 0),
         billboard: {
-          image: './img/marker-red.png',
-          scale: 0.7,  //原始大小的缩放比例
+          // image: './img/marker-red.png',
+          image: './img/video_light.png',
+          scale: 0.4,  //原始大小的缩放比例
           horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
           // heightReference: Cesium.HeightReference.CLAMP_TO_GROUND, //贴地
@@ -460,7 +569,7 @@ class Cesium_navigation extends Component {
           anchor: [0, -10],
         }, */
         click: function (entity) {//单击
-          that.setState({ showCarousel: true })
+          that.setState({ showCarousel: true,showGP:false,showLF:false,showXb:false })
           /* if (viewer.camera.positionCartographic.height > 90000) {
             // viewer.mars.popup.close();//关闭popup
 
@@ -595,10 +704,20 @@ class Cesium_navigation extends Component {
     })
   }
 
+  findXb = ()=>{
+    this.setState({
+      showCarousel: false, // 图片轮播
+      showLF: false,
+      showGP: false,
+      showXb: true
+    })
+  }
+
   showLF = () => {
     this.setState({
       showGP: false,
       showCarousel: false,
+      showXb:false,
       showLF: !this.state.showLF,
     })
   }
@@ -607,10 +726,15 @@ class Cesium_navigation extends Component {
     this.setState({
       showLF: false,
       showCarousel: false,
+      showXb:false,
       showGP: !this.state.showGP,
     })
   }
-
+  toggleCt = ()=>{
+    this.setState({
+      isCt:!this.state.isCt,
+    })
+  }
   render() {
     const imageArr = ["20210225_095354", "20210225_100354",
       "20210225_101354", "20210225_102355",
@@ -634,7 +758,7 @@ class Cesium_navigation extends Component {
           </div>
         </div>
 
-        <Card className={styles.baseMap}>
+        <Card className={`${styles.baseMap} ${this.state.isCt?styles.activeCt:null}`}>
           <Row className={styles.row}>
             <Col span={6}>图层：</Col>
             <Col span={18}>
@@ -645,12 +769,30 @@ class Cesium_navigation extends Component {
             </Col>
           </Row>
           <Row className={styles.row}>
+            <Col span={6}>影像：</Col>
+            <Col span={18}>
+              <Checkbox.Group onChange={this.onChangeImage} defaultValue={[]}>
+                {
+                  imagesData.map((item,index)=>{
+                    return <Checkbox key={index} value={item} style={{width:'100%'}}>{item}</Checkbox>
+                  })
+                }
+              </Checkbox.Group>
+            </Col>
+          </Row>
+          <Row className={styles.row}>
             <Col span={6}>DHY：</Col>
             <Col span={9}>
               <Button type="primary" onClick={this.showLF} size='small'>查看LF</Button>
             </Col>
             <Col span={9}>
               <Button type="primary" onClick={this.showGP} size='small'>查看GP</Button>
+            </Col>
+          </Row>
+          <Row className={styles.row}>
+            <Col span={6}>形变：</Col>
+            <Col span={9}>
+              <Button type="primary" onClick={this.findXb} size='small'>点击查看形变</Button>
             </Col>
           </Row>
           {/* <Row className={styles.row}>
@@ -686,6 +828,9 @@ class Cesium_navigation extends Component {
             </Col>
           </Row> */}
         </Card>
+        <div className={`${styles.myCt} ${this.state.isCt?styles.activeCt:null}`} onClick={this.toggleCt}>
+            <Icon type="right" />
+          </div>
         {
           this.state.showGP && <Card className={styles.myChart}>
             <Chart height={400} data={parseGP} scale={cols} autoFit>
@@ -787,9 +932,21 @@ class Cesium_navigation extends Component {
           </Card>
         }
 
+        {
+          this.state.showXb && this.state.xbData && <Card className={styles.myChart2}>
+          <Chart scale={{value: {min: 0}}} padding={[10,20,50,40]} autoFit height={400} data={this.state.xbData} >
+            <Line
+              shape="smooth"
+              position="day*xb"
+              color="l (270) 0:rgba(255, 146, 255, 1) .5:rgba(100, 268, 255, 1) 1:rgba(215, 0, 255, 1)"
+            />
+        </Chart>
+        </Card>
+        }
+
       </div >
     )
   }
 }
 
-export default Cesium_navigation
+export default Cesium_huanghe

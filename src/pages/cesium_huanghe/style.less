@@ -53,11 +53,15 @@
   top: 80px;
   left: 0px;
   width: 300px;
-  height: 500px;
-
+  height: 100%;
+  z-index: 1;
   .row{
-    height: 30px;
     margin-bottom: 10px;
+  }
+  &.activeCt{
+    transform:translate(-300px,0px);
+    -webkit-transition:all .5s ease-in-out ease-in;
+    -moz-transition:all .5s ease-in-out ease-in;
   }
 }
 :global{
@@ -72,6 +76,10 @@
   .ant-carousel .slick-slide h3 {
     color: #fff;
   }  
+
+  .ant-checkbox-wrapper + .ant-checkbox-wrapper{
+    margin-left: 0;
+  }
 }
 
 
@@ -117,4 +125,30 @@
   top: 80px;
   right: 0px;
   width: 800px;
+}
+.myChart2{
+  position: fixed;
+  top: 80px;
+  right: 0px;
+  width: 500px;
+}
+
+.myCt{
+  font-size: 42px;
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  top: 50%;
+  left: 286px;
+  background: aliceblue;
+  border-radius: 33px;
+  z-index: 0;
+  :hover{
+    cursor: pointer;
+  }
+  &.activeCt{
+    transform:translate(-300px,0px);
+    -webkit-transition:all .5s ease-in-out ease-in;
+    -moz-transition:all .5s ease-in-out ease-in;
+  }
 }
