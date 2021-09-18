@@ -63,6 +63,11 @@
     -webkit-transition:all .5s ease-in-out ease-in;
     -moz-transition:all .5s ease-in-out ease-in;
   }
+  :global{
+    .ant-card-body{
+      padding: 0;
+    }
+  }
 }
 :global{
   .ant-carousel .slick-slide {
@@ -96,11 +101,19 @@
 @len: length(@images);
 
 .mycarousel{
-  position: fixed;
+  /* position: fixed;
   top: 80px;
   right: 0px;
-  width: 800px;
+  width: 800px; */
   
+  position: fixed;
+  top: 80px;
+  left: 0px;
+  width: 800px;
+  z-index: 1;
+  height: calc(100% - 80px);
+  padding-top:20px;
+
   .Loop(@index) when(@index<@len){
     .item@{index}{
       background: extract(@images,@index);
@@ -121,16 +134,18 @@
 }
 
 .myChart{
-  position: fixed;
-  top: 80px;
-  right: 0px;
-  width: 800px;
+  // position: fixed;
+  // top: 80px;
+  // right: 0px;
+  // width: 800px;
 }
 .myChart2{
   position: fixed;
   top: 80px;
   right: 0px;
   width: 500px;
+  height: calc(100% - 80px);
+  z-index: 999999;
 }
 
 .myCt{

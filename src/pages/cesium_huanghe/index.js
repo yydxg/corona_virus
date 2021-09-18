@@ -1,7 +1,7 @@
 /* global mars3d Cesium*/
 import React, { Component } from 'react';
 import {
-  Divider, Checkbox, Button, Row, Col, Tooltip, Modal, Select, Card, Radio, Steps, message, Carousel,Icon,
+  Divider, Checkbox, Button, Row, Col, Tooltip, Modal, Select, Card, Radio, Steps, message, Carousel, Icon, Collapse, Drawer
 } from 'antd'
 import styles from './style.less'
 import echarts from 'echarts'
@@ -24,6 +24,7 @@ import model from './model';
 
 const { Step } = Steps;
 const { Option, OptGroup } = Select;
+const { Panel } = Collapse;
 
 let parseLF_1 = LF_data.map(r => ({ ...r, type: 'lf1', val: r['lf1'] }));
 let parseLF_2 = LF_data.map(r => ({ ...r, type: 'lf2', val: r['lf2'] }));
@@ -40,7 +41,7 @@ let parseGP_dy4 = GP_data.map(r => ({ ...r, type: 'dy4', val: r['dy4'] }));
 let parseGP_dx5 = GP_data.map(r => ({ ...r, type: 'dx5', val: r['dx5'] }));
 let parseGP_dy5 = GP_data.map(r => ({ ...r, type: 'dy5', val: r['dy5'] }));
 
-let parseGP = [...parseGP_dx1, ...parseGP_dy1, ...parseGP_dx2, ...parseGP_dy2, ...parseGP_dx3, ...parseGP_dy3, ...parseGP_dx4, ...parseGP_dy4, ...parseGP_dx5, ...parseGP_dy5];
+// let parseGP = [...parseGP_dx1, ...parseGP_dy1, ...parseGP_dx2, ...parseGP_dy2, ...parseGP_dx3, ...parseGP_dy3, ...parseGP_dx4, ...parseGP_dy4, ...parseGP_dx5, ...parseGP_dy5];
 
 const steps = [
   {
@@ -66,12 +67,12 @@ const cols = {
   },
 };
 
-const imagesData = ['RSLC_1_6_pt.eqa.def1','RSLC_1_7_pt.eqa.def1','RSLC_2_7_pt.eqa.def1'];
+// 对应发布的影像名
+const imagesData = ['RSLC_1_6_pt.eqa.def1', 'RSLC_1_7_pt.eqa.def1', 'RSLC_2_7_pt.eqa.def1'];
 
 @connect(({ Cesium_Huanghe, Login }) => ({
   Cesium_Huanghe, Login
 }))
-
 class Cesium_huanghe extends Component {
 
   constructor(props) {
@@ -97,31 +98,35 @@ class Cesium_huanghe extends Component {
 
 
       monitorPointDataSource: new Cesium.CustomDataSource("monitor"), //监控点
-      imageryLayers: [] , // 影像
+      imageryLayers: [], // 影像
       showCarousel: false, // 图片轮播
       showLF: false,
       showGP: false,
-      isCt:false,
-      showXb:false,
-      xbData:null,
+      isCt: false,
+      showXb: false,
+      xbData: null,
+      drawerGPVisible: false,
+      drawerLFVisible: false,
+      parseGP:[],
     }
   }
 
   componentDidMount() {
-    let { dispatch,history } = this.props;
+    let { dispatch, history } = this.props;
     const login = this.props.Login;
-    if(login && login.username !==''){
+    if (login && login.username !== '') {
       this.start()
-    }else{
+    } else {
       history.push('/')
     }
   }
 
+  // 开始
   start = () => {
     this.initMap({
     })
       .then(() => {
-        imagesData.map(item=>{
+        imagesData.map(item => {
           this.addImageLayerWMTS(item);
         })
         return Promise.resolve()
@@ -129,11 +134,11 @@ class Cesium_huanghe extends Component {
       .then(() => {
         this.bindClick()
         this.addFeature()
-        let timer = setInterval(()=>{
+        /* let timer = setInterval(() => {
           this.setState({
-            showXb:false,
+            showXb: false,
           })
-        },30000)
+        }, 30000) */
       })
   }
 
@@ -157,18 +162,13 @@ class Cesium_huanghe extends Component {
           basemaps: [
             {
               "pid": 10,
-              "name": "天地图卫星",
-              "type": "www_tdt",
-              "layer": "img_d",
-              "key": [
-                "313cd4b28ed520472e8b43de00b2de56",
-                "83b36ded6b43b9bc81fbf617c40b83b5",
-                "0ebd57f93a114d146a954da4ecae1e67",
-                "6c99c7793f41fccc4bd595b03711913e",
-                "56b81006f361f6406d0e940d2f89a39c"
-              ],
+              "name": "ArcGIS卫星",
+              "icon": "img/basemaps/esriWorldImagery.png",
+              "type": "arcgis",
+              "url": "https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer",
+              "enablePickFeatures": false,
               "visible": true
-            }
+            },
           ],
           infoBox: false,
         },
@@ -190,40 +190,40 @@ class Cesium_huanghe extends Component {
   };
 
   bindClick = () => {
-    const { dispatch} = this.props
+    const { dispatch } = this.props
     var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
     handler.setInputAction(movement => {
       const { showXb } = this.state
       let pick = viewer.scene.camera.pickEllipsoid(movement.position, viewer.scene.globe.ellipsoid);
       if (showXb && Cesium.defined(pick)) {
         // this.addNavPoint(pick)
-        var ellipsoid=viewer.scene.globe.ellipsoid;
-        var cartographic=ellipsoid.cartesianToCartographic(pick);
-        var lat=Cesium.Math.toDegrees(cartographic.latitude);
-        var lng=Cesium.Math.toDegrees(cartographic.longitude);
-        console.log(lng,lat)
+        var ellipsoid = viewer.scene.globe.ellipsoid;
+        var cartographic = ellipsoid.cartesianToCartographic(pick);
+        var lat = Cesium.Math.toDegrees(cartographic.latitude);
+        var lng = Cesium.Math.toDegrees(cartographic.longitude);
+        console.log(lng, lat)
         dispatch({
           type: 'Cesium_Huanghe/getXb',
           payload: {
-            lng:lng.toFixed(3),
-            lat:lat.toFixed(3),
+            lng: lng.toFixed(3),
+            lat: lat.toFixed(3),
           }
         }).then(r => {
           console.log(r)
-          if(r.success){
-            const {data} =r;
-            if(data.length === 0 ) {
+          if (r.success) {
+            const { data } = r;
+            if (data.length === 0) {
               this.setState({
-                showXb:false,
-                xbData:null,
+                showXb: false,
+                xbData: null,
               })
               message.warning('当前坐标点无形变数据.')
               return;
             }
-            let result = data[Math.floor(Math.random()*data.length)];
+            let result = data[Math.floor(Math.random() * data.length)];
             console.log(result);
             const xbData = [
-              { day: "20191025", xb: parseFloat((result['f11']).trim())},
+              { day: "20191025", xb: parseFloat((result['f11']).trim()) },
               { day: "20191106", xb: parseFloat((result['f12']).trim()) },
               { day: "20191118", xb: parseFloat((result['f13']).trim()) },
               { day: "20191130", xb: parseFloat((result['f14']).trim()) },
@@ -254,10 +254,16 @@ class Cesium_huanghe extends Component {
               { day: "20201007", xb: parseFloat((result['f39']).trim()) }
             ];
             this.setState({
-              showXb:true,
-              xbData:xbData,
+              showXb: true,
+              xbData: xbData,
+            },()=>{
+              setTimeout(()=>{
+                this.setState({
+                  showXb: true,
+                })
+              },1000)
             })
-          }else{
+          } else {
             message.error('server error.')
           }
         })
@@ -270,7 +276,7 @@ class Cesium_huanghe extends Component {
     return new Promise((reslove, reject) => {
       var wmtsImageryProvider = new Cesium.WebMapTileServiceImageryProvider({
         url: '/geoserver/gwc/service/wmts',
-        layer: 'huanghe:'+name,
+        layer: 'huanghe:' + name,
         style: '',
         format: 'image/png',
         tileMatrixSetID: 'EPSG:4326',
@@ -283,9 +289,9 @@ class Cesium_huanghe extends Component {
       let layer = viewer.imageryLayers.addImageryProvider(wmtsImageryProvider);
       layer.show = false;
       this.setState({
-        imageryLayers: [...imageryLayers,{
-          name:name,
-          data:layer
+        imageryLayers: [...imageryLayers, {
+          name: name,
+          data: layer
         }]
       }, () => {
         reslove()
@@ -433,22 +439,22 @@ class Cesium_huanghe extends Component {
     });
   };
 
-  onChangeImage = (value) =>{
+  onChangeImage = (value) => {
     const { imageryLayers, monitorPointDataSource } = this.state
-    console.log('radio checked',imageryLayers, value);
-    imagesData.map(v=>{
-      let layer = imageryLayers.find(i=>i.name === v)
-      if(layer){
+    console.log('radio checked', imageryLayers, value);
+    imagesData.map(v => {
+      let layer = imageryLayers.find(i => i.name === v)
+      if (layer) {
         layer.data.show = false;
       }
     })
-    value.map(v=>{
-      let layer = imageryLayers.find(i=>i.name === v)
-      if(layer){
+    value.map(v => {
+      let layer = imageryLayers.find(i => i.name === v)
+      if (layer) {
         layer.data.show = true;
       }
     })
-    
+
 
   }
 
@@ -569,7 +575,7 @@ class Cesium_huanghe extends Component {
           anchor: [0, -10],
         }, */
         click: function (entity) {//单击
-          that.setState({ showCarousel: true,showGP:false,showLF:false,showXb:false })
+          that.setState({ showCarousel: true, showGP: false, showLF: false, showXb: false })
           /* if (viewer.camera.positionCartographic.height > 90000) {
             // viewer.mars.popup.close();//关闭popup
 
@@ -704,7 +710,7 @@ class Cesium_huanghe extends Component {
     })
   }
 
-  findXb = ()=>{
+  findXb = () => {
     this.setState({
       showCarousel: false, // 图片轮播
       showLF: false,
@@ -717,24 +723,56 @@ class Cesium_huanghe extends Component {
     this.setState({
       showGP: false,
       showCarousel: false,
-      showXb:false,
+      showXb: false,
       showLF: !this.state.showLF,
+      drawerLFVisible: true,
     })
   }
 
-  showGP = () => {
+  showGP = (num) => {
+    let parseGP = [];
+    switch(num){
+      case 1:
+        parseGP = [...parseGP_dx1, ...parseGP_dy1]
+        break;
+      case 2:
+        parseGP = [...parseGP_dx2,...parseGP_dy2]
+        break;
+      case 3:
+        parseGP = [...parseGP_dx3,...parseGP_dy3]
+        break;
+      case 4:
+        parseGP = [...parseGP_dx4,...parseGP_dy4]
+        break;
+      case 5:
+        parseGP = [...parseGP_dx5,...parseGP_dy5]
+        break;
+      default:
+        parseGP = []
+        break;
+    }
     this.setState({
       showLF: false,
       showCarousel: false,
-      showXb:false,
+      showXb: false,
       showGP: !this.state.showGP,
+      drawerGPVisible: true,
+      parseGP,
     })
   }
-  toggleCt = ()=>{
+  toggleCt = () => {
     this.setState({
-      isCt:!this.state.isCt,
+      isCt: !this.state.isCt,
     })
   }
+
+  onClose = () => {
+    this.setState({
+      drawerGPVisible: false,
+      drawerLFVisible: false,
+    });
+  };
+
   render() {
     const imageArr = ["20210225_095354", "20210225_100354",
       "20210225_101354", "20210225_102355",
@@ -758,165 +796,158 @@ class Cesium_huanghe extends Component {
           </div>
         </div>
 
-        <Card className={`${styles.baseMap} ${this.state.isCt?styles.activeCt:null}`}>
-          <Row className={styles.row}>
-            <Col span={6}>图层：</Col>
-            <Col span={18}>
-              <Checkbox.Group onChange={this.onChangeBaseMap} defaultValue={[1, 2]}>
-                <Checkbox value={1} >影像</Checkbox>
-                <Checkbox value={2} >监控点</Checkbox>
-              </Checkbox.Group>
-            </Col>
-          </Row>
-          <Row className={styles.row}>
-            <Col span={6}>影像：</Col>
-            <Col span={18}>
-              <Checkbox.Group onChange={this.onChangeImage} defaultValue={[]}>
-                {
-                  imagesData.map((item,index)=>{
-                    return <Checkbox key={index} value={item} style={{width:'100%'}}>{item}</Checkbox>
-                  })
-                }
-              </Checkbox.Group>
-            </Col>
-          </Row>
-          <Row className={styles.row}>
-            <Col span={6}>DHY：</Col>
-            <Col span={9}>
-              <Button type="primary" onClick={this.showLF} size='small'>查看LF</Button>
-            </Col>
-            <Col span={9}>
-              <Button type="primary" onClick={this.showGP} size='small'>查看GP</Button>
-            </Col>
-          </Row>
-          <Row className={styles.row}>
-            <Col span={6}>形变：</Col>
-            <Col span={9}>
-              <Button type="primary" onClick={this.findXb} size='small'>点击查看形变</Button>
-            </Col>
-          </Row>
-          {/* <Row className={styles.row}>
-            <Col span={6}>导航：</Col>
-            <Col span={18}>
-              <Steps size="small" current={current}>
-                {steps.map(item => (
-                  <Step key={item.title} title={item.title} />
-                ))}
-              </Steps>
-            </Col>
-            <Col offset={6} span={18} style={{ marginTop: 10 }}>
-              {current < steps.length - 1 && (
-                startNav ? <Button type="primary" onClick={() => this.next()}>下一步</Button> : <Button type="primary" onClick={() => this.setState({ startNav: true })}>开启导航</Button>
-              )}
-              {current === steps.length - 1 && (
-                <Button type="primary" onClick={this.doNav}>
-                  确定导航
-                </Button>
-              )}
-              {current > 0 && (
-                <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
-                  上一步
-                </Button>
-              )}
-              {
-                closeNav && (
-                  <Button style={{ marginLeft: 8 }} onClick={() => this.closeNav()}>
-                    关闭
-                  </Button>
-                )
-              }
-            </Col>
-          </Row> */}
+        <Card className={`${styles.baseMap} ${this.state.isCt ? styles.activeCt : null}`}>
+          <Collapse accordion>
+            <Panel header="靶标形变" key="1">
+              <Row className={styles.row}>
+                <Col span={6}>DHY：</Col>
+                <Col span={9}>
+                  <Button type="primary" onClick={this.showLF} size='small'>查看LF</Button>
+                </Col>
+                <Col span={9}>
+                  <Button type="primary" onClick={()=>this.showGP(1)} size='small'>查看GP1</Button>
+                </Col>
+                </Row>
+                <Row className={styles.row}>
+                <Col offset={15} span={9}>
+                  <Button type="primary" onClick={()=>this.showGP(2)} size='small'>查看GP2</Button>
+                </Col>
+                </Row>
+                <Row className={styles.row}>
+                <Col offset={15} span={9}>
+                  <Button type="primary" onClick={()=>this.showGP(3)} size='small'>查看GP3</Button>
+                </Col>
+                </Row>
+                <Row className={styles.row}>
+                <Col offset={15} span={9}>
+                  <Button type="primary" onClick={()=>this.showGP(4)} size='small'>查看GP4</Button>
+                </Col>
+                </Row>
+                <Row className={styles.row}>
+                <Col offset={15} span={9}>
+                  <Button type="primary" onClick={()=>this.showGP(5)} size='small'>查看GP5</Button>
+                </Col>
+              </Row>
+            </Panel>
+            <Panel header="时序地表形变" key="2">
+              <Row className={styles.row}>
+                <Col span={6}>图层：</Col>
+                <Col span={18}>
+                  <Checkbox.Group onChange={this.onChangeBaseMap} defaultValue={[1, 2]}>
+                    {/* <Checkbox value={1} >影像</Checkbox> */}
+                    <Checkbox value={2} >监控点</Checkbox>
+                  </Checkbox.Group>
+                </Col>
+              </Row>
+              <Row className={styles.row}>
+                <Col span={6}>影像：</Col>
+                <Col span={18}>
+                  <Checkbox.Group onChange={this.onChangeImage} defaultValue={[]}>
+                    {
+                      imagesData.map((item, index) => {
+                        return <Checkbox key={index} value={item} style={{ width: '100%' }}>{item}</Checkbox>
+                      })
+                    }
+                  </Checkbox.Group>
+                </Col>
+              </Row>
+
+              <Row className={styles.row}>
+                <Col span={6}>形变：</Col>
+                <Col span={9}>
+                  <Button type="primary" onClick={this.findXb} size='small'>点击查看形变</Button>
+                </Col>
+              </Row>
+            </Panel>
+
+          </Collapse>,
+
         </Card>
-        <div className={`${styles.myCt} ${this.state.isCt?styles.activeCt:null}`} onClick={this.toggleCt}>
-            <Icon type="right" />
-          </div>
-        {
-          this.state.showGP && <Card className={styles.myChart}>
-            <Chart height={400} data={parseGP} scale={cols} autoFit>
-              {/* <Annotation.Text
-                position={['min', 'max']}
-                content="人均年收入(单位:千)"
-                offsetX={30}
-                style={{
-                  textAlign: 'left',
-                  fontSize: 14
-                }} /> */}
-              <Legend position='top-left' />
-              < Axis name="time" />
-              <Axis
-                name="val"
-                label={{
-                  formatter: (val) => `${val}mm`,
-                }}
-              />
-              < Tooltip
-                crosshairs={{
-                  type: "y",
-                }}
-              />
-              <Geom type="line" position="time*val" size={3} color={"type"} />
-              <Geom
-                type="point"
-                position="time*val"
-                size={3}
-                shape={"circle"}
-                color={"type"}
-                style={{
-                  stroke: "#fff",
-                  lineWidth: 1,
-                }}
-              />
-              {/* <Annotation.DataRegion
+        <div className={`${styles.myCt} ${this.state.isCt ? styles.activeCt : null}`} onClick={this.toggleCt}>
+          <Icon type="right" />
+        </div>
+
+        <Drawer
+          title="GP详情"
+          placement={'left'}
+          closable={false}
+          onClose={this.onClose}
+          visible={this.state.drawerGPVisible}
+          width={800}
+        >
+          <Chart height={600} data={this.state.parseGP} scale={cols} autoFit>
+            <Legend position='top-left' />
+            < Axis name="time" />
+            <Axis
+              name="val"
+              label={{
+                formatter: (val) => `${val}mm`,
+              }}
+            />
+            < Tooltip
+              crosshairs={{
+                type: "y",
+              }}
+            />
+            <Geom type="line" position="time*val" size={3} color={"type"} />
+            <Geom
+              type="point"
+              position="time*val"
+              size={3}
+              shape={"circle"}
+              color={"type"}
+              style={{
+                stroke: "#fff",
+                lineWidth: 1,
+              }}
+            />
+            <Slider start={0.2} end={0.234} />
+          </Chart>
+        </Drawer>
+        <Drawer
+          title="LF详情"
+          placement={'left'}
+          closable={false}
+          onClose={this.onClose}
+          visible={this.state.drawerLFVisible}
+          width={800}
+        >
+          <Chart height={600} data={parseLF} scale={cols} autoFit>
+            <Legend position='top-left' />
+            < Axis name="time" />
+            <Axis
+              name="val"
+              label={{
+                formatter: (val) => `${val}mm`,
+              }}
+            />
+            < Tooltip
+              crosshairs={{
+                type: "y",
+              }}
+            />
+            < Geom type="line" position="time*val" size={2} color={"type"} />
+            <Geom
+              type="point"
+              position="time*val"
+              size={4}
+              shape={"circle"}
+              color={"type"}
+              style={{
+                stroke: "#fff",
+                lineWidth: 1,
+              }}
+            />
+            {/* <Annotation.DataRegion
                 start={['20210318_021354', 0]}
                 end={['20210318_111954', 0]}
                 region={{ style: { fill: '#eee' } }}
                 lineLength={0}
                 text={{ style: { fill: 'green' }, content: '裂缝宽' }}
               /> */}
-              <Slider start={0.2} end={0.234} />
-            </Chart>
-          </Card>
-        }
-        {
-          this.state.showLF && <Card className={styles.myChart}>
-            <Chart height={400} data={parseLF} scale={cols} autoFit>
-              <Legend position='top-left' />
-              < Axis name="time" />
-              <Axis
-                name="val"
-                label={{
-                  formatter: (val) => `${val}mm`,
-                }}
-              />
-              < Tooltip
-                crosshairs={{
-                  type: "y",
-                }}
-              />
-              < Geom type="line" position="time*val" size={2} color={"type"} />
-              <Geom
-                type="point"
-                position="time*val"
-                size={4}
-                shape={"circle"}
-                color={"type"}
-                style={{
-                  stroke: "#fff",
-                  lineWidth: 1,
-                }}
-              />
-              {/* <Annotation.DataRegion
-                start={['20210318_021354', 0]}
-                end={['20210318_111954', 0]}
-                region={{ style: { fill: '#eee' } }}
-                lineLength={0}
-                text={{ style: { fill: 'green' }, content: '裂缝宽' }}
-              /> */}
-              <Slider start={0.4} end={0.5} />
-            </Chart>
-          </Card>
-        }
+            <Slider start={0.4} end={0.5} />
+          </Chart>
+        </Drawer>
         {
           this.state.showCarousel && <Card className={styles.mycarousel}>
             <Button onClick={() => this.setState({ showCarousel: false })} style={{ position: 'absolute', top: 0, right: 0 }} type="dashed" shape="circle" icon="close"></Button>
@@ -931,17 +962,32 @@ class Cesium_huanghe extends Component {
             </Carousel>
           </Card>
         }
-
         {
           this.state.showXb && this.state.xbData && <Card className={styles.myChart2}>
-          <Chart scale={{value: {min: 0}}} padding={[10,20,50,40]} autoFit height={400} data={this.state.xbData} >
-            <Line
-              shape="smooth"
-              position="day*xb"
-              color="l (270) 0:rgba(255, 146, 255, 1) .5:rgba(100, 268, 255, 1) 1:rgba(215, 0, 255, 1)"
-            />
-        </Chart>
-        </Card>
+            <Chart scale={{ value: { min: 0 }, xb: { alias: '形变量:mm' }, day: { alias: '日期' } }} padding={[50, 50]} autoFit height={600} data={this.state.xbData} >
+              <Axis name="xb"
+                title={{
+                  position: 'center',
+                  autoRotate: true,
+                }}
+                line={{
+                  style: {
+                    stroke: '#ddd',
+                    fill: '#ffffff',
+                    lineWidth: 1
+                  }
+                }} />
+              <Axis name="day" label={'日期'} title={{
+                position: 'center',
+                autoRotate: true,
+              }} />
+              <Line
+                shape="smooth"
+                position="day*xb"
+                color="l (270) 0:rgba(255, 146, 255, 1) .5:rgba(100, 268, 255, 1) 1:rgba(215, 0, 255, 1)"
+              />
+            </Chart>
+          </Card>
         }
 
       </div >
