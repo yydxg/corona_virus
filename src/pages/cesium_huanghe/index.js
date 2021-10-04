@@ -873,9 +873,10 @@ class Cesium_huanghe extends Component {
           closable={false}
           onClose={this.onClose}
           visible={this.state.drawerGPVisible}
-          width={800}
+          width={500}
+          style={{top:80,height:'calc(100% - 80px)'}}
         >
-          <Chart height={600} data={this.state.parseGP} scale={cols} autoFit>
+          <Chart height={500} data={this.state.parseGP} scale={cols} autoFit>
             <Legend position='top-left' />
             < Axis name="time" />
             <Axis
@@ -910,9 +911,10 @@ class Cesium_huanghe extends Component {
           closable={false}
           onClose={this.onClose}
           visible={this.state.drawerLFVisible}
-          width={800}
+          width={500}
+          style={{top:80,height:'calc(100% - 80px)'}}
         >
-          <Chart height={600} data={parseLF} scale={cols} autoFit>
+          <Chart height={500} data={parseLF} scale={cols} autoFit>
             <Legend position='top-left' />
             < Axis name="time" />
             <Axis
@@ -945,7 +947,7 @@ class Cesium_huanghe extends Component {
                 lineLength={0}
                 text={{ style: { fill: 'green' }, content: '裂缝宽' }}
               /> */}
-            <Slider start={0.4} end={0.5} />
+            <Slider start={0.45} end={0.5} />
           </Chart>
         </Drawer>
         {
@@ -964,7 +966,7 @@ class Cesium_huanghe extends Component {
         }
         {
           this.state.showXb && this.state.xbData && <Card className={styles.myChart2}>
-            <Chart scale={{ value: { min: 0 }, xb: { alias: '形变量:mm' }, day: { alias: '日期' } }} padding={[50, 50]} autoFit height={600} data={this.state.xbData} >
+            <Chart scale={{ value: { min: 0 }, xb: { alias: '形变量:mm' }, day: { alias: '日期' } }} padding={[30,0,50,50]} autoFit height={350} data={this.state.xbData} >
               <Axis name="xb"
                 title={{
                   position: 'center',
