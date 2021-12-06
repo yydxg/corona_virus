@@ -966,7 +966,7 @@ class Cesium_huanghe extends Component {
         }
         {
           this.state.showXb && this.state.xbData && <Card className={styles.myChart2}>
-            <Chart scale={{ value: { min: 0 }, xb: { alias: '形变量:mm' }, day: { alias: '日期' } }} padding={[30,0,50,50]} autoFit height={350} data={this.state.xbData} >
+            <Chart scale={{ value: { min: 0 }, xb: { alias: '形变量:mm' }, day: { alias: '日期' } }} padding={[30,0,50,50]} autoFit height={320} data={this.state.xbData} >
               <Axis name="xb"
                 title={{
                   position: 'center',
