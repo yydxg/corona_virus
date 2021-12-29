@@ -428,8 +428,6 @@ class Geodjango extends Component {
     })
   }
 
-  locationPerson = () =>{}
-
   searchFavors2 = (value) => {
     const { map, layers, selectLayer, field, poiLayer } = this.state
     const { poiData, roadData, buildingData } = this.props.geodjango;
@@ -511,7 +509,6 @@ class Geodjango extends Component {
             </TreeNode>
           </Tree>
           <Divider orientation="right"><a onClick={this.searchFavors}>搜索</a></Divider>
-          <Divider orientation="right"><a onClick={this.locationPerson}>指定当前所在位置</a></Divider>
           <div className={styles.desc}>
             {featureDetails && featureDetails.flag === 'road' && (
               <>
